@@ -1,0 +1,825 @@
+{
+  "last_node_id": 132,
+  "last_link_id": 240,
+  "nodes": [
+    {
+      "id": 76,
+      "type": "SaveImage",
+      "pos": {
+        "0": 182,
+        "1": -1444
+      },
+      "size": {
+        "0": 1220.998291015625,
+        "1": 889.5511474609375
+      },
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 230,
+          "label": "images"
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "ComfyUI"
+      ]
+    },
+    {
+      "id": 12,
+      "type": "UNETLoader",
+      "pos": {
+        "0": -1291,
+        "1": -1437
+      },
+      "size": {
+        "0": 321.7166748046875,
+        "1": 82
+      },
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            238
+          ],
+          "slot_index": 0,
+          "shape": 3,
+          "label": "MODEL"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UNETLoader"
+      },
+      "widgets_values": [
+        "flux\\flux1DevFp8_v10.safetensors",
+        "fp8_e4m3fn"
+      ]
+    },
+    {
+      "id": 50,
+      "type": "DualCLIPLoader",
+      "pos": {
+        "0": -959,
+        "1": -1454
+      },
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            103,
+            135
+          ],
+          "slot_index": 0,
+          "shape": 3,
+          "label": "CLIP"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "DualCLIPLoader"
+      },
+      "widgets_values": [
+        "SD3\\t5xxl_fp8_e4m3fn.safetensors",
+        "SD3\\clip_l.safetensors",
+        "flux"
+      ]
+    },
+    {
+      "id": 130,
+      "type": "OllamaGenerateAdvance",
+      "pos": {
+        "0": -1285,
+        "1": -1191
+      },
+      "size": {
+        "0": 400,
+        "1": 444
+      },
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "context",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "context"
+          },
+          "label": "context"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "response",
+          "type": "STRING",
+          "links": [
+            227,
+            239,
+            240
+          ],
+          "slot_index": 0,
+          "shape": 3,
+          "label": "response"
+        },
+        {
+          "name": "context",
+          "type": "STRING",
+          "links": null,
+          "shape": 3,
+          "label": "context"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "OllamaGenerateAdvance"
+      },
+      "widgets_values": [
+        "1个女孩在森林里散步",
+        "disable",
+        "http://127.0.0.1:11434",
+        "llama3:8b-instruct-q4_K_M",
+        "none",
+        "You are creating a prompt for Stable Diffusion to generate an image. First step: understand the input and generate a text prompt for the input. Second step: only respond in English with the prompt itself in phrase, but embellish it as needed but keep it under 200 tokens.",
+        151551697793456,
+        "randomize",
+        40,
+        0.9,
+        0.5,
+        -1,
+        1,
+        "0",
+        "",
+        true,
+        true
+      ]
+    },
+    {
+      "id": 51,
+      "type": "LongCLIPTextEncodeFlux",
+      "pos": {
+        "0": -1286,
+        "1": -1306
+      },
+      "size": {
+        "0": 305.3363952636719,
+        "1": 58
+      },
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 103,
+          "label": "clip"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            140
+          ],
+          "slot_index": 0,
+          "shape": 3,
+          "label": "CLIP"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LongCLIPTextEncodeFlux"
+      },
+      "widgets_values": [
+        "longclip\\longclip-L.pt"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 74,
+      "type": "CLIPTextEncodeFlux",
+      "pos": {
+        "0": -951,
+        "1": -1285
+      },
+      "size": {
+        "0": 210,
+        "1": 100
+      },
+      "flags": {
+        "collapsed": true
+      },
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 140,
+          "label": "clip"
+        },
+        {
+          "name": "clip_l",
+          "type": "STRING",
+          "link": 240,
+          "widget": {
+            "name": "clip_l"
+          },
+          "label": "clip_l"
+        },
+        {
+          "name": "t5xxl",
+          "type": "STRING",
+          "link": 239,
+          "widget": {
+            "name": "t5xxl"
+          },
+          "label": "t5xxl"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            131,
+            141
+          ],
+          "slot_index": 0,
+          "shape": 3,
+          "label": "CONDITIONING"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncodeFlux"
+      },
+      "widgets_values": [
+        "Scene Description: In a lavish Victorian garden, a grand tea party is set up under a canopy of blooming wisteria. The table is adorned with fine china, intricately patterned teapots, and a selection of ornate pastries and finger sandwiches. The lush green lawn is dotted with elegant wrought-iron chairs and vintage lace tablecloths. Delicate sunlight filters through the canopy, casting dappled shadows on the scene.\n\nCharacter Description: A sophisticated lady in a Victorian steampunk ensemble stands out. She wears a deep burgundy dress with layered ruffles and bronze accents, complemented by a wide-brimmed hat adorned with gears, feathers, and lace. Her long auburn hair is styled in elegant curls, and her eyes, enhanced with subtle, copper-toned eyeshadow, reflect a refined demeanor. She holds a porcelain teacup delicately, her fingers adorned with vintage rings, showing a poised and genteel manner.\n\nArt Style: Realistic photography, capturing the intricate details of the tea party and the Victorian attire with a soft, warm light that enhances the luxurious and nostalgic atmosphere.\n",
+        "Scene Description: In a lavish Victorian garden, a grand tea party is set up under a canopy of blooming wisteria. The table is adorned with fine china, intricately patterned teapots, and a selection of ornate pastries and finger sandwiches. The lush green lawn is dotted with elegant wrought-iron chairs and vintage lace tablecloths. Delicate sunlight filters through the canopy, casting dappled shadows on the scene.\n\nCharacter Description: A sophisticated lady in a Victorian steampunk ensemble stands out. She wears a deep burgundy dress with layered ruffles and bronze accents, complemented by a wide-brimmed hat adorned with gears, feathers, and lace. Her long auburn hair is styled in elegant curls, and her eyes, enhanced with subtle, copper-toned eyeshadow, reflect a refined demeanor. She holds a porcelain teacup delicately, her fingers adorned with vintage rings, showing a poised and genteel manner.\n\nArt Style: Realistic photography, capturing the intricate details of the tea party and the Victorian attire with a soft, warm light that enhances the luxurious and nostalgic atmosphere.\n",
+        3.5,
+        true,
+        true
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 78,
+      "type": "ConditioningZeroOut",
+      "pos": {
+        "0": -768,
+        "1": -1282
+      },
+      "size": {
+        "0": 211.60000610351562,
+        "1": 26
+      },
+      "flags": {
+        "collapsed": true
+      },
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 141,
+          "label": "conditioning"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            142
+          ],
+          "slot_index": 0,
+          "shape": 3,
+          "label": "CONDITIONING"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ConditioningZeroOut"
+      },
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 71,
+      "type": "ToBasicPipe",
+      "pos": {
+        "0": -637,
+        "1": -1438
+      },
+      "size": {
+        "0": 161.1999969482422,
+        "1": 106
+      },
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 238,
+          "label": "model"
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 135,
+          "label": "clip"
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 237,
+          "label": "vae"
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 131,
+          "label": "positive"
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 142,
+          "label": "negative"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "basic_pipe",
+          "type": "BASIC_PIPE",
+          "links": [
+            129
+          ],
+          "slot_index": 0,
+          "shape": 3,
+          "label": "basic_pipe"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ToBasicPipe"
+      }
+    },
+    {
+      "id": 10,
+      "type": "VAELoader",
+      "pos": {
+        "0": -583,
+        "1": -1278
+      },
+      "size": {
+        "0": 210,
+        "1": 58
+      },
+      "flags": {
+        "collapsed": true
+      },
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            237
+          ],
+          "slot_index": 0,
+          "shape": 3,
+          "label": "VAE"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "flux\\ae.safetensors"
+      ]
+    },
+    {
+      "id": 73,
+      "type": "ImpactKSamplerBasicPipe",
+      "pos": {
+        "0": -438,
+        "1": -1430
+      },
+      "size": {
+        "0": 288.6844177246094,
+        "1": 454
+      },
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "basic_pipe",
+          "type": "BASIC_PIPE",
+          "link": 129,
+          "label": "basic_pipe"
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 236,
+          "label": "latent_image"
+        },
+        {
+          "name": "scheduler_func_opt",
+          "type": "SCHEDULER_FUNC",
+          "link": null,
+          "label": "scheduler_func_opt"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "BASIC_PIPE",
+          "type": "BASIC_PIPE",
+          "links": null,
+          "shape": 3,
+          "label": "BASIC_PIPE"
+        },
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            139
+          ],
+          "shape": 3,
+          "label": "LATENT"
+        },
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            138
+          ],
+          "shape": 3,
+          "label": "VAE"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImpactKSamplerBasicPipe"
+      },
+      "widgets_values": [
+        1015,
+        "increment",
+        20,
+        1,
+        "euler",
+        "beta",
+        1
+      ]
+    },
+    {
+      "id": 75,
+      "type": "VAEDecode",
+      "pos": {
+        "0": -116,
+        "1": -1429
+      },
+      "size": {
+        "0": 140,
+        "1": 46
+      },
+      "flags": {
+        "collapsed": true
+      },
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 139,
+          "label": "samples"
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 138,
+          "label": "vae"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            229,
+            230
+          ],
+          "slot_index": 0,
+          "label": "IMAGE"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      }
+    },
+    {
+      "id": 122,
+      "type": "EmptyLatentImage",
+      "pos": {
+        "0": -859,
+        "1": -1213
+      },
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            236
+          ],
+          "slot_index": 0,
+          "shape": 3,
+          "label": "LATENT"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "EmptyLatentImage"
+      },
+      "widgets_values": [
+        1592,
+        832,
+        1
+      ]
+    },
+    {
+      "id": 131,
+      "type": "ShowText|pysssss",
+      "pos": {
+        "0": -858,
+        "1": -1062
+      },
+      "size": [
+        341.0705164672929,
+        391.6246406263558
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 227,
+          "widget": {
+            "name": "text"
+          },
+          "label": "text"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": null,
+          "shape": 6,
+          "label": "STRING"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ShowText|pysssss"
+      },
+      "widgets_values": [
+        "",
+        "\"A young girl wanders alone through a serene and misty forest, her footsteps quiet on the soft earth as she discovers hidden wonders beneath the canopy of ancient trees. The sunlight filters through the leaves, casting dappled shadows across her face, and a gentle breeze rustles her hair as she pauses to admire a wildflower blooming at her feet.\""
+      ]
+    },
+    {
+      "id": 132,
+      "type": "LayerUtility: PurgeVRAM",
+      "pos": {
+        "0": -135,
+        "1": -1374
+      },
+      "size": {
+        "0": 315,
+        "1": 82
+      },
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "type": "*",
+          "link": 229,
+          "label": "anything"
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "LayerUtility: PurgeVRAM"
+      },
+      "widgets_values": [
+        true,
+        true
+      ],
+      "color": "rgba(38, 73, 116, 0.7)"
+    }
+  ],
+  "links": [
+    [
+      103,
+      50,
+      0,
+      51,
+      0,
+      "CLIP"
+    ],
+    [
+      129,
+      71,
+      0,
+      73,
+      0,
+      "BASIC_PIPE"
+    ],
+    [
+      131,
+      74,
+      0,
+      71,
+      3,
+      "CONDITIONING"
+    ],
+    [
+      135,
+      50,
+      0,
+      71,
+      1,
+      "CLIP"
+    ],
+    [
+      138,
+      73,
+      2,
+      75,
+      1,
+      "VAE"
+    ],
+    [
+      139,
+      73,
+      1,
+      75,
+      0,
+      "LATENT"
+    ],
+    [
+      140,
+      51,
+      0,
+      74,
+      0,
+      "CLIP"
+    ],
+    [
+      141,
+      74,
+      0,
+      78,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      142,
+      78,
+      0,
+      71,
+      4,
+      "CONDITIONING"
+    ],
+    [
+      227,
+      130,
+      0,
+      131,
+      0,
+      "STRING"
+    ],
+    [
+      229,
+      75,
+      0,
+      132,
+      0,
+      "*"
+    ],
+    [
+      230,
+      75,
+      0,
+      76,
+      0,
+      "IMAGE"
+    ],
+    [
+      236,
+      122,
+      0,
+      73,
+      1,
+      "LATENT"
+    ],
+    [
+      237,
+      10,
+      0,
+      71,
+      2,
+      "VAE"
+    ],
+    [
+      238,
+      12,
+      0,
+      71,
+      0,
+      "MODEL"
+    ],
+    [
+      239,
+      130,
+      0,
+      74,
+      2,
+      "STRING"
+    ],
+    [
+      240,
+      130,
+      0,
+      74,
+      1,
+      "STRING"
+    ]
+  ],
+  "groups": [
+    {
+      "title": "Flux with longClip",
+      "bounding": [
+        -1300,
+        -1523,
+        2722,
+        984
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.33809166040571087,
+      "offset": [
+        2372.205736321822,
+        2205.386339845328
+      ]
+    },
+    "groupNodes": {},
+    "workspace_info": {
+      "id": "sTRa4yD-eNrknSjbwf-rO"
+    }
+  },
+  "version": 0.4
+}
